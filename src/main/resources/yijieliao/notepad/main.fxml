@@ -18,7 +18,10 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#newFile" text="新建" />
                   <MenuItem mnemonicParsing="false" onAction="#openFile" text="打开" />
-                  <MenuItem mnemonicParsing="false" onAction="#saveFile" text="保存" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveFile" text="保存">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
                   <MenuItem mnemonicParsing="false" onAction="#saveFileAs" text="另存为" />
             </items>
           </Menu>
@@ -35,12 +38,12 @@
           <Menu mnemonicParsing="false" text="格式">
             <items>
                   <CheckMenuItem mnemonicParsing="false" onAction="#toggleWrap" text="自动换行" />
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#openFontSettingsDialog" text="字体" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="视图">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem mnemonicParsing="false" text="暂无功能" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="帮助">

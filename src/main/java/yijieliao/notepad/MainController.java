@@ -1,9 +1,11 @@
 package yijieliao.notepad; // 注意换成你的包名
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
@@ -154,5 +156,48 @@ public class MainController {
         dialog.show();
     }
 
+    @FXML
+    private void openFontSettingsDialog() {
+        Stage dialog = new Stage();
+        dialog.setTitle("字体设置");
 
+        VBox vbox = new VBox(10);
+        vbox.setPadding(new Insets(10));
+
+        // 字体选择下拉菜单
+        ComboBox<String> fontComboBox = new ComboBox<>();
+        fontComboBox.getItems().addAll(Font.getFamilies());
+        fontComboBox.setValue("Arial");  // 默认选择 Arial
+
+        // 字号选择下拉菜单
+        ComboBox<Integer> sizeComboBox = new ComboBox<>();
+        sizeComboBox.getItems().addAll(10, 12, 14, 16, 18, 20, 24, 30, 36);
+        sizeComboBox.setValue(14);  // 默认字号 14
+
+        // 应用按钮
+        Button applyButton = new Button("应用");
+        applyButton.setOnAction(e -> {
+            String selectedFont = fontComboBox.getValue();
+            int selectedSize = sizeComboBox.getValue();
+            formatHandler.setFont(selectedFont, selectedSize);  // 调用FormatHandler设置字体和字号
+            dialog.close();
+        });
+
+        // 布局
+        vbox.getChildren().addAll(new Label("选择字体:"), fontComboBox, new Label("选择字号:"), sizeComboBox, applyButton);
+
+        Scene scene = new Scene(vbox);
+        dialog.setScene(scene);
+        dialog.initOwner(textArea.getScene().getWindow());
+        dialog.show();
+    }
+
+    public boolean confirmSave() {
+        if (textArea.getText().isEmpty()) {
+            return true; // 如果没有内容，直接退出
+        }
+
+        // 这里直接调用 showSaveConfirmation() 来弹出确认窗口
+        return AppEventManager.showSaveConfirmation();
+    }
 }

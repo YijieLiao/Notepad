@@ -17,6 +17,13 @@ public class MainApp extends Application {
         MainController controller = loader.getController();
         controller.setPrimaryStage(primaryStage);
 
+        // 注册关闭事件的监听器
+        primaryStage.setOnCloseRequest(event -> {
+            if (!AppEventManager.handleExitConfirmation(primaryStage, controller)) {
+                event.consume();  // 阻止窗口关闭
+            }
+        });
+
         primaryStage.setTitle("简易记事本");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();

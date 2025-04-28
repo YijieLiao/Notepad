@@ -17,5 +17,8 @@ public class FormatHandler {
         textArea.setWrapText(selected);
     }
 
-    // （预留）以后可以加字体设置、字号调整等方法
+    // 字体设置、字号调整等方法
+    public void setFont(String font, int size) {
+        textArea.setStyle("-fx-font-family: '" + font + "'; -fx-font-size: " + size + "px;");
+    }
 }
