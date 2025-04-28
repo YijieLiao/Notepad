@@ -6,6 +6,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
@@ -23,7 +24,12 @@
           </Menu>
           <Menu mnemonicParsing="false" text="编辑">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#undoAction" text="撤销" />
+                  <MenuItem mnemonicParsing="false" onAction="#redoAction" text="重做" />
+                  <MenuItem mnemonicParsing="false" onAction="#openFindReplaceDialog" text="查找和替换">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="格式">
@@ -39,7 +45,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="帮助">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem mnemonicParsing="false" onAction="#showAbout" text="关于" />
                </items>
             </Menu>
         </menus>

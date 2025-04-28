@@ -1,9 +1,9 @@
 package yijieliao.notepad; // 注意换成你的包名
 
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
@@ -15,6 +15,7 @@ public class MainController {
     @FXML
     private Label statusLabel;
 
+    private EditHandler editHandler;
     private FileHandler fileHandler; // 用来处理文件操作
     private FormatHandler formatHandler;
 
@@ -35,6 +36,7 @@ public class MainController {
     public void setPrimaryStage(Stage stage) {
         this.fileHandler = new FileHandler(stage); // 初始化文件处理器
         this.formatHandler = new FormatHandler(textArea); // 初始化格式模块
+        this.editHandler = new EditHandler(textArea);
     }
     // 以下是菜单栏事件绑定方法
 
@@ -85,6 +87,72 @@ public class MainController {
         statusLabel.setText(String.format("行:%d 列:%d 字数:%d", lineNumber, columnNumber, charCount));
     }
 
+    @FXML
+    private void showAbout() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("关于 MyNotepad");
+        alert.setHeaderText("MyNotepad - 简易记事本");
+        alert.setContentText("作者：yijieliao\n版本：v1.0\n开发工具：JavaFX + SceneBuilder");
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void undoAction() {
+        textArea.undo();
+    }
+
+    @FXML
+    private void redoAction() {
+        textArea.redo();
+    }
+
+
+    @FXML
+    private void openFindReplaceDialog() {
+        Stage dialog = new Stage();
+        dialog.setTitle("查找与替换");
+
+        VBox vbox = new VBox(10);
+        vbox.setPadding(new javafx.geometry.Insets(10));
+
+        TextField findField = new TextField();
+        findField.setPromptText("输入查找内容");
+
+        TextField replaceField = new TextField();
+        replaceField.setPromptText("输入替换内容");
+
+        Button findNextBtn = new Button("查找下一个");
+        Button replaceBtn = new Button("替换");
+        Button replaceAllBtn = new Button("全部替换");
+
+        findNextBtn.setOnAction(e -> {
+            int pos = editHandler.findText(findField.getText(), textArea.getCaretPosition());
+            if (pos >= 0) {
+                textArea.selectRange(pos, pos + findField.getText().length());
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("查找结果");
+                alert.setHeaderText(null);
+                alert.setContentText("未找到匹配内容！");
+                alert.showAndWait();
+            }
+        });
+
+        replaceBtn.setOnAction(e -> {
+            editHandler.replaceSelectedText(replaceField.getText());
+        });
+
+        replaceAllBtn.setOnAction(e -> {
+            editHandler.replaceAll(findField.getText(), replaceField.getText());
+        });
+
+        vbox.getChildren().addAll(findField, replaceField, findNextBtn, replaceBtn, replaceAllBtn);
+
+        Scene scene = new Scene(vbox);
+        dialog.setScene(scene);
+        dialog.initOwner(textArea.getScene().getWindow());
+        dialog.show();
+    }
 
 
 }
