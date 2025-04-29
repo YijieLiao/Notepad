@@ -27,12 +27,12 @@ public class EditHandler {
         return text.indexOf(keyword, startPos);
     }
 
-    // 替换当前选中
+    // 替换当前选中（其实就是直接用了textarea的方法，他会自己用replacement替换我们选中的内容）
     public void replaceSelectedText(String replacement) {
         textArea.replaceSelection(replacement);
     }
 
-    // 替换全部匹配
+    // 替换全部匹配，使用的是String的replace方法，先获取text转换为String，替换之后转回去
     public void replaceAll(String keyword, String replacement) {
         String text = textArea.getText();
         textArea.setText(text.replace(keyword, replacement));

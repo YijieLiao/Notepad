@@ -13,7 +13,7 @@ public class FormatHandler {
 
     // 自动换行
     public void toggleWrap(CheckMenuItem menuItem) {
-        boolean selected = menuItem.isSelected();
+        boolean selected = menuItem.isSelected();//获取当前item的选择属性并影响TextArea本身内置的 wrapText 属性
         textArea.setWrapText(selected);
     }
 
@@ -21,4 +21,5 @@ public class FormatHandler {
     public void setFont(String font, int size) {
         textArea.setStyle("-fx-font-family: '" + font + "'; -fx-font-size: " + size + "px;");
     }
+    //通过给TextArea设置CSS样式字符串，来动态改变字体和字号
 }

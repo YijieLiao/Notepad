@@ -7,9 +7,10 @@ import java.util.Optional;
 
 public class AppEventManager {
 
-    // 管理退出时的确认事件
+    // 管理退出时的确认事件，需要输入主窗口和maincontroller
     public static boolean handleExitConfirmation(Stage primaryStage, MainController controller) {
-        if (controller.confirmSave()) {
+        boolean decision = controller.confirmSave();
+        if (decision) {
             primaryStage.close();
             return true;
         } else {
@@ -17,9 +18,8 @@ public class AppEventManager {
         }
     }
 
-    // 显示退出确认弹窗
-    public static boolean showSaveConfirmation() {
-        // 创建退出确认弹窗
+    // 弹出一个退出确认弹窗，让用户选择要不要保存未保存的内容
+    public static Optional<ButtonType> showSaveConfirmation() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("退出确认");
         alert.setHeaderText("您有未保存的内容，是否保存？");
@@ -31,20 +31,7 @@ public class AppEventManager {
 
         alert.getButtonTypes().setAll(saveButton, dontSaveButton, cancelButton);
 
-        // 显示并等待用户的选择
-        Optional<ButtonType> result = alert.showAndWait();
-
-        // 判断用户选择的按钮
-        if (result.isPresent()) {
-            if (result.get() == saveButton) {
-                return true; // 用户选择保存
-            } else if (result.get() == dontSaveButton) {
-                return true; // 用户选择不保存
-            } else {
-                return false; // 用户选择取消
-            }
-        }
-        return false; // 如果没有选择，默认不关闭
+        return alert.showAndWait(); // 把用户选择返回给外面判断
     }
 
 }
