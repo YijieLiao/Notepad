@@ -110,7 +110,7 @@ public class MainController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("关于 MyNotepad");
         alert.setHeaderText("MyNotepad - 简易记事本");
-        alert.setContentText("作者：yijieliao\n版本：v1.0\n开发工具：JavaFX + SceneBuilder");
+        alert.setContentText("作者：廖羿杰 厦门大学信息学院 2023级本科生\n版本：v1.0\n开发工具：JavaFX + SceneBuilder");
         alert.showAndWait();
     }
 
